@@ -1,7 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from "../mailtrap/emails.js";
+import crypto from "crypto";
 
 export const signup = async (req, res) => {
   const { email, name, password } = req.body;
@@ -125,4 +126,34 @@ export const logout = async (req, res) => {
     success: true, 
     message: 'Logged out successfully'
  });
+}
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
+    const resetPasswordToken = crypto.randomBytes(20).toString('hex'); // generate a random token
+    const resetTokenExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
+
+    user.resetPasswordToken = resetPasswordToken;
+    user.resetPasswordExpiresAt = resetTokenExpiresAt
+
+    await user.save();
+
+    await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${user.resetPasswordToken}`);
+
+    return res.status(200).json({ 
+      message: 'Password reset email sent successfully',
+      success: true, 
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, error: "Server Error" }); 
+  }
 }
