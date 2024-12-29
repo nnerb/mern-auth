@@ -9,14 +9,19 @@ import { useEffect } from "react"
 import HomePage from "./pages/home"
 import ProtectedRoute from "./utils/protected-route"
 import RedirectAuthenticatedUser from "./utils/redirect-authenticated-user"
+import Spinner from "./components/spinner"
 
 function App() {
 
-  const { checkAuth } = useAuthStore()
+  const { checkAuth, isCheckingAuth } = useAuthStore()
 
   useEffect(() => {
     checkAuth()
   },[checkAuth])
+
+  if (isCheckingAuth) {
+    return <Spinner />
+  }
 
   return (
    <div

@@ -80,6 +80,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   checkAuth: async () => {
+
+    await new Promise((resolve) => setTimeout(resolve, 2000))
     set({ isCheckingAuth: true, error: null })
     try {
       const res = await fetch(`${API_URL}/check-auth`, {
