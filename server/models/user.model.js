@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpiresAt: Date,
   verificationToken: String,
   verificationTokenExpiresAt: Date,
-}, { timeStamps: true }); // timeStamps will add createdAt and updatedAt fields
+}, { timeStamps: true, versionKey: false }); // timeStamps will add createdAt and updatedAt fields
 
 
 export const User = mongoose.model('User', userSchema);

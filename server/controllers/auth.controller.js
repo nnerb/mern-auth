@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
-      return res.status(400).json({ error: 'Please provide all fields' });
+      return res.status(400).json({ message: 'Please provide all fields' });
     }
 
     const alreadyExists = await User.findOne({
@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
     });
 
     if (alreadyExists) {
-      return res.status(400).json({ error: 'Email already exists' });
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10); // 123456 => @3$%#^&*
@@ -52,7 +52,7 @@ export const signup = async (req, res) => {
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   }
 }
 
@@ -65,7 +65,7 @@ export const verifyEmail = async (req, res) => {
     })
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired verification code' });
+      return res.status(400).json({ message: 'Invalid or expired verification code' });
     }
 
     user.isVerified = true;
@@ -86,7 +86,7 @@ export const verifyEmail = async (req, res) => {
 
   } catch (error) { 
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   }
 }
  
@@ -96,13 +96,13 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ success: false, error: 'Invalid credentials' });
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(400).json({ success: false, error: 'Invalid credentials' });
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
 
     generateTokenAndSetCookie(res, user._id)
@@ -120,7 +120,7 @@ export const login = async (req, res) => {
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   }
 }
 
@@ -138,7 +138,7 @@ export const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ error: 'User not found' });
+      return res.status(400).json({ message: 'User not found' });
     }
 
     const resetPasswordToken = crypto.randomBytes(20).toString('hex'); // generate a random token
@@ -158,7 +158,7 @@ export const forgotPassword = async (req, res) => {
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   }
 }
 
@@ -173,7 +173,7 @@ export const resetPassword = async (req, res) => {
     })
 
     if (!user) {
-      return res.status(400).json({ success: false, error: 'Invalid or expired reset token' });
+      return res.status(400).json({ success: false, message: 'Invalid or expired reset token' });
     }
     //update password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -192,7 +192,7 @@ export const resetPassword = async (req, res) => {
 
   } catch (error) { 
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   }
 }
 
@@ -201,12 +201,12 @@ export const checkAuth = async (req, res) => {
     const user = await User.findById(req.userId).select('-password');
     
     if (!user) {
-      return res.status(400).json({ success: false, error: 'User not found' });
+      return res.status(400).json({ success: false, message: 'User not found' });
     }
     
     return res.status(200).json({ success: true, user })
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ success: false, error: "Server Error" }); 
+    return res.status(500).json({ success: false, message: "Server Error" }); 
   } 
 }
