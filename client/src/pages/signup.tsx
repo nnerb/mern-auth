@@ -68,7 +68,7 @@ const SignUpPage = () => {
 						type='submit'
 						// disabled={isLoading}
 					>
-						{/* {isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Sign Up"} */}
+						{"Sign Up"}
 					</motion.button>
 				</form>
 			</div>

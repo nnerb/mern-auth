@@ -4,8 +4,13 @@ interface PasswordStrengthMeterProps {
   password: string;
 }
 
+interface CriteaProps {
+	label: string
+	met: boolean
+}
+
 const PasswordCriteria:React.FC<PasswordStrengthMeterProps> = ({ password }) => {
-	const criteria = [
+	const criteria: CriteaProps[] = [
 		{ label: "At least 6 characters", met: password.length >= 6 },
 		{ label: "Contains uppercase letter", met: /[A-Z]/.test(password) },
 		{ label: "Contains lowercase letter", met: /[a-z]/.test(password) },
