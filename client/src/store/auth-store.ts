@@ -102,6 +102,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: 'include'
       }, "Logout failed")
 
       set({ user: null, isAuthenticated: false, error: null, isLoading: false })
