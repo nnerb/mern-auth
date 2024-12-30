@@ -4,11 +4,11 @@ import { useAuthStore } from "../store/auth-store"
 const ProtectedRoute = ({ children } : { children : React.ReactNode }) => {
   const { isAuthenticated, user } = useAuthStore()
 
-  if (!isAuthenticated) {
+  if (!user || !isAuthenticated) {
     return <Navigate to="/login" replace /> 
   }
 
-  if (!user?.isVerified) {
+  if (!user.isVerified) {
     return <Navigate to="/verify-email" replace/>
   }
   return children

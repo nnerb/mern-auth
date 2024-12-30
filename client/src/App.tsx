@@ -38,7 +38,7 @@ function App() {
         <ProtectedRoute>
           <HomePage />
         </ProtectedRoute>
-       }/>
+      }/>
       <Route path="/signup" element={
         <RedirectAuthenticatedUser>
           <SignUpPage/>
