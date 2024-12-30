@@ -87,9 +87,19 @@ export const useAuthStore = create<AuthStore>((set) => ({
         },
         credentials: 'include'
       }, "Authentication failed")
-      set({ user: data.user, isAuthenticated: true, isCheckingAuth: false, checkAuthError: null })
-    } catch {
-      set({ checkAuthError: null, isCheckingAuth: false, isAuthenticated: false })
+      set({
+        user: data.user, 
+        isAuthenticated: true, 
+        isCheckingAuth: false, 
+        checkAuthError: null
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      set({
+        checkAuthError: errorMessage || "An error occurred during authentication",
+        isCheckingAuth: false,
+        isAuthenticated: false // Mark the user as unauthenticated in case of an error
+      });
     }
   },
   login: async (email: string, password: string) => {
@@ -129,7 +139,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   },
   forgotPassword: async (email: string) => {
-    set({ isLoading: true })
+    set({ isLoading: true, forgotPasswordError: null })
     try {
       await fetchHandler(`${API_URL}/forgot-password`, {
         method: 'POST',
@@ -143,8 +153,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({ isLoading: false })
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occured"
-      set({ forgotPasswordError: errorMessage, isLoading: false })
-      throw new Error(errorMessage); 
+      set({ forgotPasswordError: errorMessage, isLoading: false }) 
     }
   },
   resetPassword: async (token: string, password: string, confirmPassword: string) => {

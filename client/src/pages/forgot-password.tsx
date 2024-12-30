@@ -4,23 +4,20 @@ import { ArrowLeft, Loader, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/auth-store";
 import Input from "../components/input";
-import toast from "react-hot-toast";
 
 const ForgotPasswordPage = () => {
 	const [email, setEmail] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const { isLoading, forgotPassword, forgotPasswordError } = useAuthStore();
+	const { isLoading, forgotPassword } = useAuthStore();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
 			await forgotPassword(email);
 			setIsSubmitted(true);
-		} catch (error) {
+		} catch {
 			setIsSubmitted(false);
-			console.log(error);
-			toast.error(forgotPasswordError); 
 		}
 	};
 

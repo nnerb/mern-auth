@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import FloatingShape from "./components/floating-shape"
 import SignUpPage from "./pages/signup"
 import LoginPage from "./pages/login"
@@ -16,10 +16,11 @@ import ResetPasswordPage from "./pages/reset-password"
 function App() {
 
   const { checkAuth, isCheckingAuth } = useAuthStore()
+  const location = useLocation()
 
   useEffect(() => {
     checkAuth()
-  },[checkAuth])
+  },[checkAuth, location])
 
   if (isCheckingAuth) {
     return <Spinner />
