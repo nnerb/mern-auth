@@ -12,7 +12,7 @@ const SignUpPage = () => {
   const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { signup, error, isLoading } = useAuthStore() 	
+	const { signup, signupError, isLoading } = useAuthStore() 	
 	const navigate = useNavigate()
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +63,7 @@ const SignUpPage = () => {
             value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					{error && <p className='text-red-500 font-semibold'>{error}</p>}
+					{signupError && <p className='text-red-500 font-semibold'>{signupError}</p>}
 					<PasswordStrengthMeter password={password} />
 
 					<motion.button

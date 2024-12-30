@@ -4,7 +4,11 @@ import { fetchHandler } from "../utils/fetch-handler";
 
 
 interface AuthStore {
-  error: string | null
+  signupError: string | null,
+  verifyEmailError: string | null,
+  checkAuthError: string | null,
+  loginError: string | null,
+  logoutError: string | null,
   isLoading: boolean;
   isAuthenticated: boolean;
   isCheckingAuth: boolean;
@@ -21,11 +25,15 @@ const API_URL = "http://localhost:5000/api/auth";
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   isAuthenticated: false,
-  error: null,
+  signupError: null,
+  verifyEmailError: null,
+  checkAuthError: null,
+  loginError: null,
+  logoutError: null,
   isLoading: false,
   isCheckingAuth: true,
   signup: async (name: string, email: string, password: string) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, signupError: null });
 
     try {
       const data = await fetchHandler(`${API_URL}/signup`, {
@@ -35,16 +43,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
         credentials: 'include'
       }, "Signup failed")
 
-      set({ user: data.user, isLoading: false, isAuthenticated: true, error: null });
+      set({ user: data.user, isLoading: false, isAuthenticated: true, signupError: null });
 
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      set({ error: errorMessage, isLoading: false });
+      set({ signupError: errorMessage, isLoading: false });
       throw Error
     }
   },
   verifyEmail: async (code: string) => {
-    set({ isLoading: true, error: null })
+    set({ isLoading: true, verifyEmailError: null })
     try {
       const data = await fetchHandler(`${API_URL}/verify-email`, {
         method: "POST",
@@ -53,16 +61,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
         credentials: 'include'
       }, "Email verification failed")
       
-      set({ user: data.user, isLoading: false, isAuthenticated: true, error: null });
+      set({ user: data.user, isLoading: false, isAuthenticated: true, verifyEmailError: null });
 
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      set({ error: errorMessage, isLoading: false });
+      set({ verifyEmailError: errorMessage, isLoading: false });
       throw Error
     }
   },
   checkAuth: async () => {
-    set({ isCheckingAuth: true, error: null })
+    set({ isCheckingAuth: true, checkAuthError: null })
     try {
       const data = await fetchHandler(`${API_URL}/check-auth`, {
         method: 'GET',
@@ -71,13 +79,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
         },
         credentials: 'include'
       }, "Authentication failed")
-      set({ user: data.user, isAuthenticated: true, isCheckingAuth: false, error: null })
+      set({ user: data.user, isAuthenticated: true, isCheckingAuth: false, checkAuthError: null })
     } catch {
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false })
+      set({ checkAuthError: null, isCheckingAuth: false, isAuthenticated: false })
     }
   },
   login: async (email: string, password: string) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, loginError: null });
     try {
       const data = await fetchHandler(`${API_URL}/login`, {
         method: "POST",
@@ -86,16 +94,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
         credentials: "include"
       }, "Login failed")
 
-      set({ user: data.user, isLoading: false, isAuthenticated: true, error: null });
+      set({ user: data.user, isLoading: false, isAuthenticated: true, loginError: null });
 
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      set({ error: errorMessage, isLoading: false });
+      set({ loginError: errorMessage, isLoading: false });
       throw Error
     }
   },
   logout: async () => {
-    set({ isLoading: true, error: null })
+    set({ isLoading: true, logoutError: null })
     try {
       await fetchHandler(`${API_URL}/logout`, {
         method: 'POST',
@@ -105,10 +113,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
         credentials: 'include'
       }, "Logout failed")
 
-      set({ user: null, isAuthenticated: false, error: null, isLoading: false })
+      set({ user: null, isAuthenticated: false, logoutError: null, isLoading: false })
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      set({ error: errorMessage, isLoading: false });
+      set({ logoutError: errorMessage, isLoading: false });
       throw Error
     }
   }

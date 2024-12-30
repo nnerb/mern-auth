@@ -11,7 +11,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
 		const navigate = useNavigate()
 
-		const { login, error, isLoading } = useAuthStore();
+		const { login, loginError, isLoading } = useAuthStore();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => { 
       e.preventDefault();
@@ -57,7 +57,7 @@ const LoginPage = () => {
 					<div className="flex items-center">
             <Link to={"/forgot-password"} className="text-sm text-green-400 hover:underline">Forgot Password?</Link>
           </div>
-					{error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
+					{loginError && <p className='text-red-500 font-semibold mt-2'>{loginError}</p>}
 					<motion.button
 						className='mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
 						font-bold rounded-lg shadow-lg hover:from-green-600

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 const EmailVerificationPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);  
-  const { verifyEmail, isLoading, error } = useAuthStore()
+  const { verifyEmail, isLoading, verifyEmailError } = useAuthStore()
 
   const navigate = useNavigate()
 
@@ -105,7 +105,7 @@ const EmailVerificationPage = () => {
               />
             ))}
           </div>
-          {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
+          {verifyEmailError && <p className='text-red-500 font-semibold mt-2'>{verifyEmailError}</p>}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
