@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import FloatingShape from "./components/floating-shape"
 import SignUpPage from "./pages/signup"
 import LoginPage from "./pages/login"
@@ -10,6 +10,8 @@ import HomePage from "./pages/home"
 import ProtectedRoute from "./utils/protected-route"
 import RedirectAuthenticatedUser from "./utils/redirect-authenticated-user"
 import Spinner from "./components/spinner"
+import ForgotPasswordPage from "./pages/forgot-password"
+import ResetPasswordPage from "./pages/reset-password"
 
 function App() {
 
@@ -49,7 +51,23 @@ function App() {
           <LoginPage/>
         </RedirectAuthenticatedUser>
       }/>
-      <Route path="/verify-email" element={<EmailVerificationPage />}/>
+      <Route path="/verify-email" element={
+        <RedirectAuthenticatedUser>
+          <EmailVerificationPage />
+        </RedirectAuthenticatedUser>
+        }/>
+      <Route path="/forgot-password" element={
+        <RedirectAuthenticatedUser>
+          <ForgotPasswordPage />
+        </RedirectAuthenticatedUser>
+        }/>
+      <Route path="/reset-password/:token" element={
+        <RedirectAuthenticatedUser>
+          <ResetPasswordPage />
+        </RedirectAuthenticatedUser>
+      }/>
+      {/* catch all routes */}
+			<Route path='*' element={<Navigate to='/' replace />} />
     </Routes>
     <Toaster />
    </div>
