@@ -25,7 +25,9 @@ interface AuthStore {
   resetPassword: (token: string, password: string, confirmPassword: string) => Promise<void>
 }
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = import.meta.env.MODE === "development" 
+? "http://localhost:5000/api/auth"
+: "/api/auth"
 
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
