@@ -11,6 +11,7 @@ interface AuthStore {
   logoutError: string | null,
   forgotPasswordError: string | null,
   resetPasswordError: string | null,
+  checkResetPasswordTokenError: string | null,
   message: string | null
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -23,9 +24,10 @@ interface AuthStore {
   logout: () => Promise<void>,
   forgotPassword: (email: string) => Promise<void>,
   resetPassword: (token: string, password: string, confirmPassword: string) => Promise<void>
+  checkResetPasswordToken: (token: string) => Promise<void>
 }
 
-const API_URL = import.meta.env.MODE === "development" 
+const API_URL = import.meta.env.MODE === "development"  
 ? "http://localhost:5000/api/auth"
 : "/api/auth"
 
@@ -39,6 +41,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   logoutError: null,
   forgotPasswordError: null,
   resetPasswordError: null,
+  checkResetPasswordTokenError: null,
   message: null,
   isLoading: false,
   isCheckingAuth: false,
@@ -170,7 +173,22 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			set({ message: data.message, isLoading: false });
 		} catch (error) {
 			const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
-      set({ logoutError: errorMessage, isLoading: false });
+      set({ resetPasswordError: errorMessage, isLoading: false });
+      throw Error
+		}
+	},
+  checkResetPasswordToken: async (token: string) => {
+		set({ isLoading: true, checkResetPasswordTokenError: null });
+		try {
+			const data = await fetchHandler(`${API_URL}/reset-password/${token}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+      }, "Reset token failed. Please try again.")
+			set({ message: data.message, isLoading: false });
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      set({ checkResetPasswordTokenError: errorMessage, isLoading: false });
       throw Error
 		}
 	},

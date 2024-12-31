@@ -12,6 +12,7 @@ import RedirectAuthenticatedUser from "./utils/redirect-authenticated-user"
 import Spinner from "./components/spinner"
 import ForgotPasswordPage from "./pages/forgot-password"
 import ResetPasswordPage from "./pages/reset-password"
+import ResetPasswordProtectedRoute from "./utils/reset-password-protected-route"
 
 function App() {
 
@@ -64,7 +65,9 @@ function App() {
         }/>
       <Route path="/reset-password/:token" element={
         <RedirectAuthenticatedUser>
-          <ResetPasswordPage />
+          <ResetPasswordProtectedRoute>
+            <ResetPasswordPage />
+          </ResetPasswordProtectedRoute>
         </RedirectAuthenticatedUser>
       }/>
       {/* catch all routes */}
