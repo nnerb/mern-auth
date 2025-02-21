@@ -42,6 +42,7 @@ This is a **secure authentication system** built with **MERN, TypeScript, and Ta
 - Framer Motion (animations)
 - React Hot Toast (notifications)
 - Fetch API (for API calls)
+- React Router DOM (client-side routing)
 
 ### Backend
 
