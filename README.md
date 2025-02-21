@@ -6,72 +6,81 @@ This is a **secure authentication system** built with **MERN, TypeScript, and Ta
 ✅ Secure password validation 🔑  
 ✅ Zustand for state management ⚡  
 ✅ Smooth animations with Framer Motion 🎭  
-✅ JWT cookie authentication 🍪  
+✅ JWT cookie authentication 🍪
 
 ---
 
-## 🚀 Features  
-- **User Registration with Validation:**  
-  - Password must have at least **6 characters**, **uppercase**, **lowercase**, **number**, and **special character**.  
-- **Email Verification (Mailtrap):**  
-  - A verification code is sent upon registration.  
-  - Includes an **Account Verification Email Template**.  
-- **Automatic Login After Verification.**  
-- **Dashboard with User Information:**  
-  - Profile details (name, email).  
-  - Account activity (joined date, last login).  
-- **Forgot Password Feature:**  
-  - Sends a password reset code via email.  
-  - Includes a **Password Reset Email Template**.  
-- **JWT Authentication with HTTP-only Cookies.**  
-- **Logout Functionality.**  
-- **Modern UI with Tailwind CSS and Framer Motion.**  
+## 🚀 Features
+
+- **User Registration with Validation:**
+  - Password must have at least **6 characters**, **uppercase**, **lowercase**, **number**, and **special character**.
+- **Email Verification (Mailtrap):**
+  - A verification code is sent upon registration.
+  - Includes an **Account Verification Email Template**.
+  - ⚠️ Note: Mailtrap only works for testing purposes and emails can only be received by addresses registered in your Mailtrap account. For production, consider using **SendGrid, Mailgun, or AWS SES**.
+- **Automatic Login After Verification.**
+- **Dashboard with User Information:**
+  - Profile details (name, email).
+  - Account activity (joined date, last login).
+- **Forgot Password Feature:**
+  - Sends a password reset code via email.
+  - Includes a **Password Reset Email Template**.
+- **JWT Authentication with HTTP-only Cookies.**
+- **Logout Functionality.**
+- **Modern UI with Tailwind CSS and Framer Motion.**
 
 ---
 
-## 🛠️ Tech Stack  
+## 🛠️ Tech Stack
 
-### Frontend  
-- React (Vite) ⚡  
-- TypeScript  
-- Tailwind CSS 🎨  
-- Zustand (state management)  
-- Framer Motion (animations)  
-- React Hot Toast (notifications)  
-- Fetch API (for API calls)  
+### Frontend
 
-### Backend  
-- Node.js + Express.js  
-- MongoDB + Mongoose  
-- JWT Authentication  
-- Mailtrap (email service)  
+- React (Vite) ⚡
+- TypeScript
+- Tailwind CSS 🎨
+- Zustand (state management)
+- Framer Motion (animations)
+- React Hot Toast (notifications)
+- Fetch API (for API calls)
+
+### Backend
+
+- Node.js + Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- Mailtrap (email service)
 
 ---
 
-## 🚀 Installation & Setup  
+## 🚀 Installation & Setup
 
-### 1️⃣ Clone the Repository  
+### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/nnerb/mern-auth.git
 cd auth-app
 ```
 
-### 2️⃣ Install Dependencies  
+### 2️⃣ Install Dependencies
 
-#### Backend  
+#### Backend
+
 ```bash
 cd server
 npm install
 ```
 
-#### Frontend  
+#### Frontend
+
 ```bash
 cd client
 npm install
 ```
 
-### 3️⃣ Set Up Environment Variables  
-Create a **.env** file in the backend folder and add:  
+### 3️⃣ Set Up Environment Variables
+
+Create a **.env** file in the backend folder and add:
+
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
@@ -80,15 +89,17 @@ MAILTRAP_API_TOKEN=your_mailtrap_api_token
 CLIENT_URL=your_client_url
 ```
 
-### 4️⃣ Run the Application  
+### 4️⃣ Run the Application
 
-#### Backend  
+#### Backend
+
 ```bash
 cd server
 npm run dev
 ```
 
-#### Frontend  
+#### Frontend
+
 ```bash
 cd client
 npm run dev
@@ -96,23 +107,26 @@ npm run dev
 
 ---
 
-## 🔥 Future Improvements  
-- ✅ Google & GitHub OAuth login  
-- ✅ Two-factor authentication (2FA)  
-- ✅ Dark mode toggle  
+## 🔥 Future Improvements
+
+- ✅ Google & GitHub OAuth login
+- ✅ Two-factor authentication (2FA)
+- ✅ Dark mode toggle
 
 ---
 
-## 📺 Inspiration  
-This project was inspired by [this YouTube tutorial](https://www.youtube.com/watch?v=pmvEgZC55Cg) with modifications and enhancements.  
+## 📺 Inspiration
+
+This project was inspired by [this YouTube tutorial](https://www.youtube.com/watch?v=pmvEgZC55Cg) with modifications and enhancements.
 
 ---
 
-## 🤝 Contributing  
-Contributions are welcome! Feel free to open an issue or submit a pull request.  
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ---
 
-## 📜 License  
-This project is licensed under the **MIT License**.  
+## 📜 License
 
+This project is licensed under the **MIT License**.
